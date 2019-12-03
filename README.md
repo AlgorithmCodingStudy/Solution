@@ -1,2 +1,3 @@
-# Solution
-Coding for Algorithm Problem
+# 코테 스터디
+
+스터디에서 같이 공부하였던 코드입니다!
