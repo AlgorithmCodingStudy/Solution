@@ -11,11 +11,21 @@
      
 --------------------------------------------------------------------------------------------------
 
-### 설명
+### 설명 ( 코드 진행 )
 
-     
-     
-     
+
+<img width="200" alt="1" src="https://user-images.githubusercontent.com/29946480/70213469-c06d6600-177c-11ea-8ee5-0031e20f8b35.PNG">
+# ▼
+<img width="186" alt="2" src="https://user-images.githubusercontent.com/29946480/70213470-c06d6600-177c-11ea-8459-f3ac02dc2f4f.PNG">
+# ▼
+<img width="165" alt="3" src="https://user-images.githubusercontent.com/29946480/70213472-c105fc80-177c-11ea-8a4f-a92fcd6b2146.PNG">
+# ▼
+<img width="172" alt="4" src="https://user-images.githubusercontent.com/29946480/70213473-c105fc80-177c-11ea-8277-6f3f68085585.PNG">
+# ▼
+<img width="138" alt="5" src="https://user-images.githubusercontent.com/29946480/70213475-c105fc80-177c-11ea-9152-a5cda4258f16.PNG">
+# ▼
+# ...
+
 --------------------------------------------------------------------------------------------------
 
 
