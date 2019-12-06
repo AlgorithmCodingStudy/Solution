@@ -25,12 +25,7 @@ def permutations(numbers, l, topick):
         tmp = "".join(tmp)
         answer_tmp.append(copy.deepcopy(permutations(tmp, l, topick-1)))
         l.pop()
-    answer = []
-    for j, ans in enumerate(answer_tmp):
-        if j == 0:
-            answer = ans
-        else:
-            answer += ans
+    answer = sum(answer_tmp, [])
     return answer
 
 
