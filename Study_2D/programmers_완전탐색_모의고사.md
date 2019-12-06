@@ -45,16 +45,16 @@ vector<int> solution(vector<int> answers) {
 	}
 
 
-	int result = *max_element(count, count + 3);
+	int result = *max_element(count, count + 3); //제일 최대값을 구하고
 
 	for (int i = 0; i < 3; i++)
 	{
-		if (result == count[i]) {
+		if (result == count[i]) { //배열을 돌면서 최댓값과 같은 인덱스를 Ans에 넣기
 			Ans.push_back(i + 1);
 		}
 	}
 
-	sort(Ans.begin(), Ans.end());
+	sort(Ans.begin(), Ans.end()); //오름차순으로 정렬
 
 	return Ans;
 }
