@@ -20,3 +20,4 @@ if __name__ == '__main__':
     print(solution(10, 2))
     print(solution(8, 1))
     print(solution(24, 24))
+    print('test')
