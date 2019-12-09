@@ -23,8 +23,6 @@ def dfs_recursion(graph, nodes, visit, result, target, numbers):
 
 
 def solution(numbers, target):
-    answer = 0
-
     graph = {0: set([1, -1])}
     for i, n in enumerate(numbers):
         graph[i+1] = set([i+2, -(i+2)])

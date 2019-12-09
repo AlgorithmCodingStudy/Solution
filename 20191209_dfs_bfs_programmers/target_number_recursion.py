@@ -16,10 +16,7 @@ def sum_recursion(numbers, result, target):
 
 
 def solution(numbers, target):
-    answer = 0
-    result = 0
-
-    sum_recursion(numbers, result, target)
+    sum_recursion(numbers, 0, target)
     answer = count
     return answer
 
