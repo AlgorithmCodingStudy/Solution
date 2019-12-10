@@ -44,7 +44,8 @@ int solution(vector<int> numbers, int target) {
 }
 ```
 
-### //성공
+### //성공1
+
 ```c
 #include <string>
 #include <vector>
@@ -70,6 +71,45 @@ void DFS(vector<int>numbers, int idx, int N, int hap,int target)
         arr[idx] = false;
         DFS(numbers, idx+1,N, hap-numbers[idx],target);
    }
+}
+
+
+int solution(vector<int> numbers, int target) {
+    
+    int answer = 0;
+   
+    DFS(numbers,0,numbers.size(),0,target);
+    
+    answer = result.size();
+    
+    return answer;
+}
+```
+
+### 성공 2
+
+```c
+#include <string>
+#include <vector>
+#include<iostream>
+#include<algorithm>
+
+using namespace std;
+bool arr[21] ={false};
+vector<int>result;
+
+void DFS(vector<int>numbers, int idx, int N, int hap,int target)
+{
+    if(idx == N)
+    {
+        if(target == hap)
+            result.push_back(hap);
+        return;
+    }
+    
+    DFS(numbers, idx+1,N, hap+numbers[idx],target);
+    DFS(numbers, idx+1,N, hap-numbers[idx],target);
+   
 }
 
 
