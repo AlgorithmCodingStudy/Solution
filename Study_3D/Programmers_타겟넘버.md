@@ -1,4 +1,4 @@
-### //실패
+### 실패
 
 ```c
 #include <string>
@@ -19,7 +19,7 @@ void DFS(vector<int>numbers, int idx, int N, int hap, string a,int target)
         return;
     }
     
-    for(int i = idx; i<N; i++) //==> for문때매 중복되는 값이 생김!
+    for(int i = idx; i<N; i++) //==> for문때매 중복되는 값이 생김!  //왜돌렸지..?
     {
         if(arr[i] == true)continue;
         arr[i] = true;
@@ -44,7 +44,7 @@ int solution(vector<int> numbers, int target) {
 }
 ```
 
-### //성공1
+### 성공 1
 
 ```c
 #include <string>
