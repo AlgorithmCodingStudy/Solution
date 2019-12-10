@@ -22,10 +22,9 @@ def check_next(tar, dst):
 
 def solution(begin, target, words):
     if target not in words:
-        count = 0
+        answer = 0
     else:
-        count = bfs(begin, target, words)
-    answer = count
+        answer = bfs(begin, target, words)
     return answer
 
 
