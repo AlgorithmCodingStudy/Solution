@@ -19,7 +19,7 @@ void DFS(vector<int>numbers, int idx, int N, int hap, string a,int target)
         return;
     }
     
-    for(int i = idx; i<N; i++)
+    for(int i = idx; i<N; i++) //==> for문때매 중복되는 값이 생김!
     {
         if(arr[i] == true)continue;
         arr[i] = true;
