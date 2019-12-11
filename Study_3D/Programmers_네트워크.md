@@ -78,12 +78,13 @@ int solution(int n, vector<vector<int>> computers) {
     int answer;
     for(int j = 0; j < n; j++){
         if(!visit[j]){
-            N++;
+            DFS(j,computers);
+            answer++;
         }
-        DFS(j,computers);
+        
     }   
     
-    return N;
+    return answer;
 }
 
 ```
