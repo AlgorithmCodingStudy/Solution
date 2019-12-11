@@ -1,3 +1,5 @@
+# 실패
+
 ```c
 #include <string>
 #include <vector>
@@ -47,4 +49,41 @@ int solution(int n, vector<vector<int>> computers) {
     
 	return answer;
 }
+```
+
+# 성공
+
+```c
+#include <string>
+#include <vector>
+ 
+using namespace std;
+int visit[200] = {false};
+int N = 0;
+ 
+void DFS(int start, vector<vector<int>> tmp){
+    if(visit[start]){
+        return;
+    }
+    visit[start] = true;
+    
+    for(int i = 0; i<tmp[start].size(); i++){
+        if(tmp[start][i]){
+            DFS(i,tmp);   
+        }
+    }
+}
+ 
+int solution(int n, vector<vector<int>> computers) {
+    int answer;
+    for(int j = 0; j < n; j++){
+        if(!visit[j]){
+            N++;
+        }
+        DFS(j,computers);
+    }   
+    
+    return N;
+}
+
 ```
