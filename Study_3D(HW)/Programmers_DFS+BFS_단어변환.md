@@ -40,7 +40,7 @@ void DFS(int idx, string begin, string target, vector<string>words, int cnt)
        return;
    }
     
-   for(int i = idx; i < words.size(); i++)
+   for(int i = idx; i < words.size(); i++) //idx에서 core dump에러 발생! 
    {
        if(check[i] == false) {
        string compare = words.at(i);
