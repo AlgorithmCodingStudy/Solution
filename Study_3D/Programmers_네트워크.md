@@ -88,3 +88,41 @@ int solution(int n, vector<vector<int>> computers) {
 }
 
 ```
+
+### 알고리즘문제해결전략 dfs책보고
+```c
+#include <string>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+bool visit[200] = { false };
+
+void DFS(int now, vector<vector<int>> computers) {
+	
+	if (visit[now])
+	{
+		return;
+	}
+	visit[now] = true;
+
+	for (int i = 0; i < computers[now].size(); i++)
+	{
+		int next = computers[now][i];
+		if (next == 0)continue;
+		DFS(i, computers);
+	}
+}
+
+int solution(int n, vector<vector<int>> computers) {
+	int answer = 0;
+	for (int i = 0; i < computers.size(); i++)
+	{
+		if (visit[i])continue;
+		DFS(i, computers);
+		answer++;
+	}
+	return answer;
+}
+
+```
