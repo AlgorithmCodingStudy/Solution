@@ -8,12 +8,22 @@
 # 경로가 두개면 알파벳 순서가 앞서는 경로를 return
 # 불가능한 경로 X
 
+# DFS
+
+# 알고보니 명시되지 않은 조건이 있었다...
+# 같은 티켓이 두 개 존재할 수 있음.
+# ex) [["ICN", "JFK"], ["ICN", "JFK"], ["JFK", "ICN"], ["JFK", "ABC"]]
+#     --> ["ICN", "JFK", "ICN", "JFK", "ABC"]
+# 단순히 방문했다고 제외해버리면 티켓 두 개를 모두 쓸 수 없음.
+
+from copy import deepcopy
+
 
 def get_path(tickets):
     path_result = []
-    for t in tickets:
-        if t[0] == 'ICN':
-            q = [(t, [t])]
+    for start in tickets:
+        if start[0] == 'ICN':
+            q = [(start, [start])]
 
             while q:
                 city, path = q.pop(0)
@@ -21,8 +31,13 @@ def get_path(tickets):
                 if len(path) == len(tickets):
                     path_result.append(make_path(path))
                 else:
-                    for t in tickets:
-                        if t[0] == city[1] and t not in path:
+                    residual_tickets = deepcopy(tickets)
+                    for t in path:
+                        if t in tickets:
+                            residual_tickets.remove(t)
+
+                    for t in residual_tickets:
+                        if t[0] == city[1]:
                             q.append((t, path + [t]))
 
     return sorted(path_result)[0]
@@ -42,6 +57,6 @@ def solution(tickets):
 
 
 if __name__ == '__main__':
-    print(solution([["ICN", "JFK"], ["ICN", "ABC"]]))
+    print(solution([["ICN", "JFK"], ["ICN", "JFK"], ["JFK", "ICN"], ["JFK", "ABC"]]))
     print(solution([["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]]))
     print(solution([["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL", "SFO"]]))
