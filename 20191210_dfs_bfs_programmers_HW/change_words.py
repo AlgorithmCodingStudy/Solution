@@ -12,8 +12,10 @@ def bfs(begin, target, words):
 
 
 def check_next(tar, dst):
+    # tar와 dst의 같지 않은 수를 리턴
     n_equal = sum(map(lambda x, y: True if x != y else False, list(tar), list(dst)))
 
+    # 하나만 같을 경우 True
     if n_equal == 1:
         return True
     else:
@@ -21,6 +23,7 @@ def check_next(tar, dst):
 
 
 def solution(begin, target, words):
+    # target이 words에 없으면 변환할 수 없으므로 answer = 0
     if target not in words:
         answer = 0
     else:
