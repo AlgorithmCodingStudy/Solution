@@ -63,33 +63,37 @@ int solution(int n, vector<vector<int>> computers) {
 ```c
 #include <string>
 #include <vector>
- 
+
 using namespace std;
-int visit[200] = {false};
-int N = 0;
- 
-void DFS(int start, vector<vector<int>> tmp){
-    if(visit[start]){
+bool visit[201] = {false};
+
+void DFS(int idx, vector<vector<int>>computers) //정점탐색(어느정점과 연결되었는지)
+{
+    if(visit[idx] == true) //이미 해당정점을 탐색했으면 리턴
+    {
         return;
     }
-    visit[start] = true;
     
-    for(int i = 0; i<tmp[start].size(); i++){
-        if(tmp[start][i]){
-            DFS(i,tmp);   
+    visit[idx] = true; //정점 방문체크
+    
+    for(int i = idx; i < computers[idx].size(); i++) //해당정점에서 연결된 정점 탐색(0~n까지)
+    {
+        if(computers[idx][i] == 1){ //정점이 다른정점과 연결되었으면
+            DFS(i,computers); //다른정점에서 연결된 다른정점 탐색
         }
     }
+    
 }
- 
+
 int solution(int n, vector<vector<int>> computers) {
-    int answer;
-    for(int j = 0; j < n; j++){
-        if(!visit[j]){
-            DFS(j,computers);
-            answer++;
-        }
-        
-    }   
+    int answer = 0;
+    
+    for(int i = 0; i < computers.size(); i++) //모든 정점탐색
+    {
+        if(visit[i] == true)continue; //해당 정점을 이미 탐색했으면 건너뜀
+        DFS(i,computers); //해당 정점 탐색
+        answer++;
+    }
     
     return answer;
 }
