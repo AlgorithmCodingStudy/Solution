@@ -2,7 +2,7 @@
 
 ### EX)
 
-   <img width="417" alt="캡처" src="https://user-images.githubusercontent.com/29946480/70970546-f3e7b300-20e1-11ea-9adb-18005622cc1e.PNG">
+   <img width="700" alt="캡처" src="https://user-images.githubusercontent.com/29946480/70970546-f3e7b300-20e1-11ea-9adb-18005622cc1e.PNG">
 
 			   
 			   
