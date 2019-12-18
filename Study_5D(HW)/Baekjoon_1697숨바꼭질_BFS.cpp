@@ -60,3 +60,54 @@ int main()
 	return 0;
 
 }
+
+
+
+/*-------------------------------------------------------------------------------------------------------------------------*/
+
+
+#include<iostream>
+#include<queue>
+
+using namespace std;
+
+int N, K;
+bool check[100001] = { false };
+
+queue<pair<int, int>>Q;
+
+int BFS()
+{
+	while (!Q.empty())
+	{
+		int subin = Q.front().first;
+		int time = Q.front().second;
+		Q.pop();
+
+		if (subin == K)
+		{
+			return time;
+		}
+
+		int nx[] = { subin + 1,subin - 1,subin * 2 }; //가능한 다음위치를 배열에 저장해서
+		for (int i = 0; i < 3; i++) //for문을 돌리면서 만족하지 않는 조건은 패스한다
+		{
+			if (nx[i] < 0 || nx[i] > 100000 || check[nx[i]] == true)continue;
+			check[nx[i]] = true;
+			Q.push({ nx[i],time + 1 });			
+		}
+	}
+}
+
+int main()
+{
+	
+	cin >> N >> K;
+	Q.push({ N,0 });
+	check[N] = true;
+	
+	int result = BFS();
+	cout << result << endl;
+	return 0;
+
+}
