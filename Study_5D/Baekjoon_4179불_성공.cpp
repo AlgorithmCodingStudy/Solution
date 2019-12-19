@@ -12,7 +12,7 @@ int dx[] = { -1,1,0,0 };
 int dy[] = { 0,0,-1,1 };
 struct info { int x, y, move; string name; }; //x,y,움직인수, 지훈인지 불인지
 
-queue<info>Q;
+queue<info>Q; //큐 한개로 푼 방법
 
 void input();
 int BFS();
