@@ -1,3 +1,10 @@
+/*
+< 예외처리 >
+1.불이 없을때 
+2.불이 여러개일떄
+*/
+
+
 #include<iostream>
 #include<queue>
 
@@ -108,4 +115,132 @@ int BFS()
 		}
 	}
 	return -1000; //큐가 빌때까지 돌았는데 리턴하지 못했으면 ==> 지훈이 탈출 실패 ==> -1000 리턴
+}
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------------------
+
+
+// < 예외처리 안해서 실패한 코드 >
+
+#include<iostream>
+#include<queue>
+
+using namespace std;
+
+int R, C;
+char map[1010][1010];
+bool checkJH[1010][1010] = {false};
+bool checkF[1010][1010] = {false};
+int dx[] = { -1,1,0,0 };
+int dy[] = { 0,0,-1,1 };
+struct info { int x, y; };
+queue<pair<info, int>>JH;
+queue<info>F;
+
+void input();
+int BFS();
+
+int main()
+{
+	input();
+
+	int result = BFS();
+
+
+	if (result == -1000)
+	{
+		cout << "IMPOSSIBLE";
+	}
+	else
+		cout << result << endl;
+
+
+	return 0;
+}
+
+void input()
+{
+	cin >> R >> C;
+	for (int i = 1; i <= R; i++)
+	{
+		for (int j = 1; j <= C; j++)
+		{
+			cin >> map[i][j];
+			if (map[i][j] == 'J')
+			{
+				checkJH[i][j] = true;
+				JH.push({ {i,j},0 });
+				map[i][j] = '.';
+			}
+			if (map[i][j] == 'F')
+			{
+				checkF[i][j] = true;
+				F.push({ i,j });
+			}
+		}
+	}
+}
+
+int BFS()
+{
+	while (!JH.empty())
+	{
+		int cx = JH.front().first.x;
+		int cy = JH.front().first.y;
+		int move = JH.front().second;
+		int fx = F.front().x;
+		int fy = F.front().y;
+		//cout << cx << cy << move << endl;
+
+		JH.pop();
+		F.pop();
+
+		if (cx == 1 || cy == 1 || cx == R || cy == C)
+		{
+			if (map[cx][cy] == '.') {
+				return move+1;
+			}
+			else
+				return -1000;
+		}
+
+		for (int i = 0; i < 4; i++) //불이 여러개일경우 틀림!!!
+			                    //만약 불이 2개인 경우가 초기값일 때,
+			                    //1번불, 2번불이 모두 while문 돌고 지훈이의 경우로 넘어가야하는데 이 코드는 1번불만 돌고 바로 지훈이로넘어감
+		{                           //불이 우선순위로 먼저 움직여야 하기 때문에 틀림!
+			int fnx = fx + dx[i];
+			int fny = fy + dy[i];
+
+			if (fnx <= 0 || fny <= 0 || fnx > R || fny > C)continue;
+			if (checkF[fnx][fny] == false && map[fnx][fny] == '.')
+			{
+				checkF[fnx][fny] = true;
+				map[fnx][fny] = 'F';
+				F.push({ fnx,fny });
+			}
+		}
+
+		for (int i = 0; i < 4; i++)
+		{
+			int nx = cx + dx[i];
+			int ny = cy + dy[i];
+			int nm = move + 1;
+
+			if (nx <= 0 || ny <= 0 || nx > R || ny > C)continue;
+			if (checkJH[nx][ny] == false && map[nx][ny] == '.')
+			{
+				checkJH[nx][ny] = true;
+				//cout << nx << " " << ny << " " <<nm<<endl;
+				JH.push({ {nx,ny},nm });
+			}
+		}
+
+	}
+
+	return -1000;
 }
