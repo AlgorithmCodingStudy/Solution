@@ -50,26 +50,32 @@ def bfs(start, end):
     def next_direction(x, y, direction):
         if map[x][y] == '!':
             for dx, dy in [(0, 1), (0, -1), (-1, 0), (1, 0)]:
-                check_next(x, y, dx, dy, direction)
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < n and 0 <= ny < n \
+                        and map[nx][ny] not in path\
+                        and map[nx][ny] != '*':
+
+                    direct_xy = (direction[0] + dx, direction[1] + dy)
+
+                    if direct_xy == (0, 2) or direct_xy == (2, 0):
+                        q.put((nx, ny, path + [(nx, ny)], mirror, (dx, dy)))
+                    else:
+                        q.put((nx, ny, path + [(nx, ny)], mirror + 1, (dx, dy)))
+
         elif map[x][y] == '.':
-            check_next(x, y, *direction, direction)
+            nx, ny = x + direction[0], y + direction[1]
+            if 0 <= nx < n and 0 <= ny < n \
+                    and map[nx][ny] not in path\
+                    and map[nx][ny] != '*':
+                q.put((nx, ny, path + [(nx, ny)], mirror, (direction[0], direction[1])))
+
         elif map[x][y] == '#':
             for dx, dy in [(0, 1), (0, -1), (-1, 0), (1, 0)]:
-                check_next(x, y, dx, dy, direction)
-
-    def check_next(x, y, dx, dy, direction):
-        nx, ny = x + dx, y + dy
-        if 0 <= nx < n and 0 <= ny < n and (nx, ny) not in path:
-            if map[nx][ny] == '.' or map[nx][ny] == '#':
-                q.put((nx, ny, path + [(nx, ny)], mirror, (dx, dy)))
-
-            elif map[nx][ny] == '!':
-                direct_xy = (direction[0] + dx, direction[1] + dy)
-
-                if direct_xy == (0, 2) or direct_xy == (2, 0):
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < n and 0 <= ny < n \
+                        and map[nx][ny] not in path\
+                        and map[nx][ny] != '*':
                     q.put((nx, ny, path + [(nx, ny)], mirror, (dx, dy)))
-                else:
-                    q.put((nx, ny, path + [(nx, ny)], mirror + 1, (dx, dy)))
 
     q = Queue()
     q.put((*start, [], 0, (0, 0)))
@@ -83,3 +89,4 @@ def bfs(start, end):
 
 
 print(bfs(door[0], door[1]))
+pass
