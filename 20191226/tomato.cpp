@@ -1,68 +1,203 @@
 #include <iostream>
-#include <queue>
+
+#include <deque>
+
 using namespace std;
-bool visted[1000][1000];
-queue <pair<int, int>> q;
-int arr[1000][1000] = { 0 };
-void bfs(int x, int y) {
 
-	int dx[4] = { -1,1,0,0 };
-	int dy[4] = { 0,0,-1,1 };
+ 
 
-	visted[x][y] = true;
-	q.push(pair<int,int>(x, y));
+const int MAX = 1000;
 
-	while (!q.empty()) {
-	
-		pair<int, int> p = q.front();
-		int nx = p.first;
-		int ny = p.second;
-		q.pop();
-		
-		for (int i = 0; i < 4; i++) {
+ 
 
-			if (arr[nx + i][ny + i] != 0 && arr[nx][ny] == 0) {
-			
-				arr[nx][ny] = 1;
-				visted[nx][ny] = true;
-				q.push(pair<int, int>(nx, ny));
-			}
-		
-		}
-		
-	
-	}
+typedef struct
+
+{
+
+        int y, x;
+
+}Dir;
+
+ 
+
+Dir moveDir[4] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+
+ 
+
+int N, M;
+
+int tomato[MAX][MAX];
+
+deque<pair<int, int>> dq;
+
+int noTomato;
+
+ 
+
+//토마토가 전부 익었는지 확인
+
+bool allRipe(void)
+
+{
+
+        int possible = M * N - noTomato;
+
+        int tomatoCnt = 0;
+
+ 
+
+        for (int i = 0; i < M; i++)
+
+                 for (int j = 0; j < N; j++)
+
+                         if (tomato[i][j] == 1)
+
+                                 tomatoCnt++;
+
+ 
+
+        return possible == tomatoCnt;
 
 }
 
-int main() {
+ 
 
-	int M = 0, N = 0;
-	
+int BFS(void)
 
-	cin >> M >> N;
+{
 
-	for (int i = 0; i < M; i++) {
-		for (int j = 0; j < N; j++) {
-		
-			cin >> arr[M][N];
-		}
-	}
+        int day = 0;
 
-	for (int a = 0; a < M; a++) {
-		for (int b = 0; b < N; b++) {
-			if (arr[a][b] == 1 && ~visted[a][b]) bfs(a, b);
+ 
 
-		
-		}
-	}
+        //처음부터 익힐 수 있는 토마토가 없는 경우
 
-	for (int c = 0; c < M; c++) {
-		for (int d = 0; d < N; d++) {
-			if (arr[c][d] == 0) return -1;
+        if (dq.empty())
 
+                 return -1;
 
-		}
-	}
-	return 0;
+ 
+
+        while (!dq.empty())
+
+        {
+
+                 int currentSize = dq.size();
+
+ 
+
+                 for (int i = 0; i < currentSize; i++)
+
+                 {
+
+                         int y = dq.front().first;
+
+                         int x = dq.front().second;
+
+ 
+
+                         for (int i = 0; i < 4; i++)
+
+                         {
+
+                                 int nextY = y + moveDir[i].y;
+
+                                 int nextX = x + moveDir[i].x;
+
+ 
+
+                                 //다음 토마토가 범위 안에 있고 안 익었을 경우에만
+
+                                 if (0 <= nextY && nextY < M && 0 <= nextX && nextX < N && tomato[nextY][nextX] == 0)
+
+                                 {
+
+                                          tomato[nextY][nextX] = 1;
+
+                                          dq.push_back(make_pair(nextY, nextX));
+
+                                 }
+
+                         }
+
+ 
+
+                         dq.pop_front();
+
+ 
+
+                         //익힐 수 있는 토마토를 전부 익혔고 전부 익었을 경우
+
+                         if (dq.size() == 0 && allRipe())
+
+                                 return day;
+
+                         //익힐 수 있는 토마토는 전부 익혔지만 안 익은 토마토 존재
+
+                         else if (dq.size() == 0 && !allRipe())
+
+                                 return -1;
+
+                 }
+
+                 day++;
+
+        }
+
+}
+
+ 
+
+int main(void)
+
+{
+
+        cin >> N >> M;
+
+ 
+
+        for (int i = 0; i < M; i++)
+
+                 for (int j = 0; j < N; j++)
+
+                 {
+
+                         cin >> tomato[i][j];
+
+ 
+
+                         if (tomato[i][j] == 1)
+
+                                 dq.push_back(make_pair(i, j)); //익은 토마토는 덱에 넣는다
+
+                         else if (tomato[i][j] == -1)
+
+                                 noTomato++; //토마토를 넣을 수 없는 칸
+
+                 }
+
+ 
+
+        if (dq.size() == M * N - noTomato)
+
+        {
+
+                 cout << 0 << endl; //모든 토마토 다 익었을 경우
+
+        }
+
+        else
+
+        {
+
+                 int result = BFS();
+
+                 cout << result << endl;
+
+        }
+
+ 
+
+        return 0;
+
 }
