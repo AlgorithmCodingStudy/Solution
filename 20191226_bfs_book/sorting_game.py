@@ -26,6 +26,8 @@ for _ in range(t):
     nums = list(map(int, read().strip().split()))
     case.append((n, nums))
 
+q = deque()
+
 
 def bfs():
     global n, nums
