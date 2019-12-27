@@ -13,41 +13,35 @@ A가 B를 신뢰하면 B가 A를 해킹 가능하다.
 """
 import sys
 read = sys.stdin.readline
+from collections import deque
 n, m = map(int, read().strip().split())
-line = [tuple(map(int, read().strip().split())) for _ in range(m)]
-if n == 1:
-    print(1)
+graph = [[] for _ in range(n+1)]
+for _ in range(m):
+    a, b = map(int, read().strip().split())
+    graph[b].append(a)
 
 
 def dfs(start):
-    stack = [start]
-    visit = {}
-    n_com = 0
-    while stack:
-        node = stack.pop()
+    stack = deque()
+    stack.append(start)
+    visit = [False] * (n+1)
+    visit[start] = True
+    n_com = 1
 
-        if node not in visit:
-            visit[node] = True
-            for l in line:
-                if l[1] == node:
-                    stack.append(l[0])
-                    n_com += 1
+    while stack:
+        node = stack.popleft()
+        for nxt in graph[node]:
+            if not visit[nxt]:
+                stack.append(nxt)
+                visit[nxt] = True
+                n_com += 1
 
     return n_com
 
 
-def get_parent():
-    parent = set()
-    child = set()
-    for l in line:
-        parent.add(l[1])
-        child.add(l[0])
-    return parent - child
-
-
 max_value = 0
 max_idx = []
-for i in get_parent():
+for i in range(1, n+1):
     tmp = dfs(i)
     if max_value < tmp:
         max_value = tmp
@@ -56,5 +50,4 @@ for i in get_parent():
         max_idx.append(i)
 
 
-max_idx.sort()
 print(" ".join(map(str, max_idx)))
