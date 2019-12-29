@@ -21,25 +21,35 @@ matrix = [list(map(int, read().strip())) for _ in range(n)]
 
 def bfs():
     q = deque()
-    q.append((0, 0))
-    visit = {}
-    visit[(0, 0)] = True
-    length = 0
+    q.append((0, 0, True))
+    check_visit = [[0 for _ in range(m)] for _ in range(n)]
+    check_visit[0][0] = 1
 
-    while q:
-        x, y = q.popleft()
-        if x == n-1 and y == m-1:
-            return length
+    def next_node():
+        arr = []
         for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
             nx, ny = x + dx, y + dy
             if not (0 <= nx < n and 0 <= ny < m):
                 continue
-            if (nx, ny) not in visit and matrix[nx][ny] == 0:
-                q.append((nx, ny))
-                visit[(nx, ny)] = True
-        length += 1
+            if break_flag:
+                if (check_visit[nx][ny] == 0 or check_visit[nx][ny] == check_visit[x][y] + 1) and matrix[nx][ny] == 0:
+                    arr.insert(0, (nx, ny, True))
+                    check_visit[nx][ny] = check_visit[x][y] + 1
+            else:
+                if (check_visit[nx][ny] == 0 or check_visit[nx][ny] == check_visit[x][y] + 1) and matrix[nx][ny] == 0:
+                    arr.insert(0, (nx, ny, False))
+                    check_visit[nx][ny] = check_visit[x][y] + 1
+            if check_visit[nx][ny] == 0 and matrix[nx][ny] == 1:
+                arr.append((nx, ny, False))
+                check_visit[nx][ny] = check_visit[x][y] + 1
+        return arr
+
+    while q:
+        x, y, break_flag = q.popleft()
+        if x == n-1 and y == m-1:
+            return check_visit[x][y]
+        q.extend(next_node())
+    return -1
 
 
-result = bfs()
-
-pass
+print(bfs())
