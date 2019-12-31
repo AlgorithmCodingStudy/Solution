@@ -23,16 +23,10 @@ void bfs(int start) {
 			//친구관계이고 방문한 적 없으면
 			if (friends[node][a] == true && visited[a] == 0) {
 				visited[a] = visited[node] + 1; //단계 증가
-				q.push(a);
-			
-			}
-				
-			
-		
+				q.push(a);		
+			}									
 		}
 	}
-
-
 }
 int main() {
 	int idx = 0;// 최소인 인덱스
@@ -59,27 +53,13 @@ int main() {
 		// 나 제외하고 단계의 합 구하기
 		for (int h = 1; h <= N; h++) {
 			if (k == h) continue;
-
-			else sum += (visited[h] - 1);
-
-			
-
+			else sum += (visited[h] - 1);			
 		}
         //케빈 베이컨 수 최소인 거 업데이트
 				if (sum < max) {
 					max = sum;
 					idx = k;
-
 				}
-			
-			
-			
-
-		
-
-		
-
-
 	}
 
 	cout << idx;
