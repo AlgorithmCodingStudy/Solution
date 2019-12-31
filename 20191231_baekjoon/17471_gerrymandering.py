@@ -29,19 +29,14 @@ def check_area(area):
 
     while q:
         node = q.pop()
-        if set(visit.keys()) == area:
-            return True
         if node not in visit:
             visit[node] = True
-            if not graph[node]:
-                q.append(node)
-            else:
-                nxt = set(graph[node]) - (set(district) - area)
-                q.extend(nxt)
-                q.append(node)
+            if set(visit.keys()) == area:
+                return True
+            nxt = set(graph[node]) - (set(district) - area)
+            q.extend(nxt)
 
-    if set(visit.keys()) != area:
-        return False
+    return False
 
 
 def sum_population(area):
@@ -53,14 +48,12 @@ def sum_population(area):
 
 min_area = inf
 for i in range(1, n//2+1):
-    tmp = set(combinations(district, i))
     for j in set(combinations(district, i)):
         area1 = set(j)
         area2 = set(district) - area1
         if check_area(area1) and check_area(area2):
-            area1_population = sum_population(area1)
-            area2_population = sum_population(area2)
-            diff = abs(area1_population - area2_population)
+            population1, population2 = sum_population(area1), sum_population(area2)
+            diff = abs(population1 - population2)
             if diff < min_area:
                 min_area = diff
 
