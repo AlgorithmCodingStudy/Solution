@@ -1,0 +1,129 @@
+#include<iostream>
+#include<vector>
+#include<cstring>
+#include<algorithm>
+
+using namespace std;
+
+bool check[15];
+bool C[15];
+vector<int>Region[11];
+int people[15] = { 0 };
+int N;
+int mmax = -999999;
+int max_idx = -9;
+vector<int>result;
+int all = 0;
+
+void DFS(int cur)
+{
+	for (int i = 0; i < Region[cur].size(); i++)
+	{
+		if (Region[cur][i] == max_idx)continue;
+		if (check[Region[cur][i]] == false)
+		{
+			check[Region[cur][i]] = true;
+			//cout << Region[cur][i] << " ";
+			DFS(Region[cur][i]);
+			
+		}
+	}
+
+}
+
+int main()
+{
+	int nomethod = 0;
+	cin >> N;
+	
+	for (int i = 1; i <= N; i++)
+	{
+		cin >> people[i];
+		all += people[i];
+	}
+	for (int i = 1; i <= N; i++)
+	{
+		int a;
+		cin >> a;
+		if (mmax < a)
+		{
+			mmax = a;
+			max_idx = i;
+		}
+		if (a == 0)nomethod++;
+		for (int j = 0; j < a; j++)
+		{
+			int b;
+			cin >> b;
+			Region[i].push_back(b);
+		}
+	}
+
+	if (nomethod == N)cout << -1;
+	else {
+		//cout << mmax << max_idx << endl;
+		check[max_idx] = true;
+		for (int i = 0; i < Region[max_idx].size(); i++)
+		{
+			int hap = 0;
+			for (int j = 1; j <= N; j++)
+			{
+				if (i == j)continue;
+				check[Region[max_idx][i]] = true;
+				hap += people[j];
+			}
+			result.push_back(abs(people[Region[max_idx][i]] - hap));
+		}
+
+		for (int i = 1; i <= N; i++)
+		{
+			if (check[i] == true)continue;
+			int hap = 0;
+			for (int j = 1; j <= N; j++)
+			{
+				if (i == j)continue;
+				hap += people[j];
+			}
+			result.push_back(abs(people[i] - hap));
+		}
+
+
+		for (int i = 1; i <= N; i++)
+		{
+			if (i == max_idx)continue;
+			memset(check, false, sizeof(check));
+			int hap = 0;
+			int hap2 = 0;
+			for (int j = 0; j < Region[i].size(); j++)
+			{
+				if (Region[i][j] == max_idx)continue;
+				check[Region[i][j]] = true;
+				hap += people[Region[i][j]];
+			}
+			for (int j = 1; j <= N; j++)
+			{
+				if (check[j] == true)continue;
+				hap2 += people[j];
+			}
+			result.push_back(abs(hap - hap2));
+		}
+
+		memset(check, false, sizeof(check));
+		for (int i = 1; i <= N; i++)
+		{
+			check[i] = true;
+			DFS(i);
+			int hap = 0;
+			for (int i = 1; i <= N; i++)
+			{
+
+				if (check[i] == false)
+					hap += people[i];
+			}
+			result.push_back(abs((all - hap) - hap));
+		}
+
+		cout << *min_element(result.begin(), result.end());
+	}
+	return 0;
+}
