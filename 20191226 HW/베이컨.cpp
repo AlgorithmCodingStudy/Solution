@@ -1,6 +1,6 @@
 #include <iostream>
 #include <queue>
-#include <cstring>
+#include <cstring> //이거 안 해서 
 using namespace std;
 queue<int> q;
 bool friends[101][101];
