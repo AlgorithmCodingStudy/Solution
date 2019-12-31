@@ -1,6 +1,6 @@
 #include <iostream>
 #include <queue>
-#include <cstring> //이거 안 해서 
+#include <cstring> //이거 안 해서 오류
 using namespace std;
 queue<int> q;
 bool friends[101][101];
@@ -31,17 +31,15 @@ void bfs(int start) {
 int main() {
 	int idx = 0;// 최소인 인덱스
 	int max = 10000;
-
-	cin >> N >> M;
-
-	//행렬로 친구 관계 입력 받기
 	
+	cin >> N >> M;
+	
+	//행렬로 친구 관계 입력 받기
 		for (int j = 1; j <= M; j++) {
 			int row = 0, col = 0;
 			cin >> row >> col;
 			friends[row][col] = true;
 			friends[col][row] = true;
-
 		}
 	
 
@@ -61,7 +59,5 @@ int main() {
 					idx = k;
 				}
 	}
-
 	cout << idx;
-
 }
