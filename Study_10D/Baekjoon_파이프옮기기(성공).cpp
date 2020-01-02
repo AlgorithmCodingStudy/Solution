@@ -6,7 +6,7 @@
 #include<iostream>
 #include<queue>
 #include<vector>
-#include<algorithm>
+#include<algorithm> //abs헤더
 
 /*
  0: 빈칸, 1: 벽
