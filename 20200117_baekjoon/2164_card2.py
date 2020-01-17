@@ -23,18 +23,13 @@ import sys
 read = sys.stdin.readline
 
 n = int(read().strip())
-if n == 1:
-    print(1)
-    sys.exit(0)
 
 card = deque()
 card.extend(list(range(1, n+1)))
 
-while True:
+while len(card) > 1:
     card.popleft()
-    if len(card) == 1: break
     now = card.popleft()
     card.append(now)
 
 print(card[0])
-
