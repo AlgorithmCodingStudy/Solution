@@ -21,22 +21,22 @@ t = int(read().strip())
 for _ in range(t):
     keyboard_input = list(read().strip())
 
-    password = []
-    idx = -1
+    prefix = []
+    postfix = []
+
     for c in keyboard_input:
         if c == '<':
-            if idx > 0:
-                idx -= 1
-        elif c == '>':
-            if idx < len(password):
-                idx += 1
-        elif c == '-':
-            if not password:
-                continue
-            password.pop(idx-1)
-            idx -= 1
-        else:
-            password.insert(idx+1, c)
-            idx += 1
+            if prefix:
+                postfix.append(prefix.pop())
 
-    print("".join(password))
+        elif c == '>':
+            if postfix:
+                prefix.append(postfix.pop())
+
+        elif c == '-':
+            if prefix:
+                prefix.pop()
+        else:
+            prefix.append(c)
+    postfix.reverse()
+    print("".join(prefix+postfix))
