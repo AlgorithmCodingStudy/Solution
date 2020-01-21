@@ -27,10 +27,12 @@ k = int(read().strip())
 apples = [tuple(map(lambda func: int(func)-1, read().strip().split())) for _ in range(k)]
 l = int(read().strip())
 turns = [tuple(read().strip().split()) for _ in range(l)]
+
 dxy = [(0, -1), (-1, 0), (0, 1), (1, 0)]  # Left, Up, Right, Down
 
 snake = deque()
 snake.appendleft((0, 0))
+
 time = 0
 now_direction = 2
 
@@ -66,12 +68,12 @@ def change_direction(direction):
     global now_direction
     if direction == 'L':
         now_direction -= 1
+        if now_direction == -1:
+            now_direction = 3
     else:
         now_direction += 1
-    if now_direction == 4:
-        now_direction = 0
-    elif now_direction == -1:
-        now_direction = 3
+        if now_direction == 4:
+            now_direction = 0
 
 
 for i, (sec, direct) in enumerate(turns):
