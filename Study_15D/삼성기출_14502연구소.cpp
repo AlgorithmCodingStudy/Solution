@@ -18,7 +18,7 @@ vector<int>result;
 void virus();
 void safety();
 
-void DFS(int x, int y, int wall)
+void DFS(int x, int wall)
 {
 	if (wall == 3)
 	{
@@ -34,7 +34,7 @@ void DFS(int x, int y, int wall)
 			if (industry[i][j] == 0 && wall < 3)
 			{
 				industry[i][j] = 1;
-				DFS(i, j, wall + 1);
+				DFS(i, wall + 1);
 				industry[i][j] = 0;
 			}
 		}
@@ -44,38 +44,29 @@ void DFS(int x, int y, int wall)
 int main()
 {
 	ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    cin>>N>>M;
+	cin.tie(NULL);
+	cout.tie(NULL);
+	cin >> N >> M;
 	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j < M; j++)
 		{
-			cin>>industry[i][j];
+			cin >> industry[i][j];
 		}
 	}
 
 
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < M; j++)
-		{
-			if (industry[i][j] == 0)
-			{
-				DFS(i, j, 0);
-			}
-		}
-	}
+	DFS(0, 0);
 
 	int R = *max_element(result.begin(), result.end());
-	cout<<R;
+	cout << R;
 
 	return 0;
 }
 
 void virus()
 {
-	bool check[10][10] = {false,};
+	bool check[10][10] = { false, };
 	memcpy(&copy_industry, &industry, sizeof(industry));
 
 	for (int i = 0; i < N; i++)
