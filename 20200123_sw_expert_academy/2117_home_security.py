@@ -32,26 +32,27 @@
 
 
 def count_home(x, y):
-    def check_range(x_, y_):
+    def check_range(x_, y_):  # 범위 체크
         return 0 <= x_ < n and 0 <= y_ < n
 
     cnt = 0
-    for dx in range(-(k-1), k):
-        if dx <= 0:
-            for dy in range(-(k+dx-1), k+dx):
+    for dx in range(-(k-1), k):  # k가 4면 dx는 -3 ~ 3
+        if dx <= 0:  # 운영지역의 윗부분
+            for dy in range(-(k+dx-1), k+dx):  # k가 4, dx가 -3이면 dy는 0 ~ 0, dx가 -2면 dy는 -1 ~ 1
                 nx, ny = x+dx, y+dy
                 if not check_range(nx, ny): continue
-                if area[nx][ny] == 1:
+                if area[nx][ny] == 1:  # 집이면 cnt += 1
                     cnt += 1
-        else:
+
+        else:  # 운영지역의 아랫부분
             for dy in range(-(k-dx-1), k-dx):
                 nx, ny = x+dx, y+dy
                 if not check_range(nx, ny): continue
                 if area[nx][ny] == 1:
                     cnt += 1
 
-    benefit = cnt * m - (k**2 + (k-1)**2)
-    if benefit >= 0:
+    benefit = cnt * m - (k**2 + (k-1)**2)  # 이익 계산
+    if benefit >= 0:  # 손해가 나지 않으면
         return cnt
     else:
         return 0
@@ -66,11 +67,11 @@ for test_case in range(1, T + 1):
     area = [list(map(int, input().split())) for _ in range(n)]
 
     max_home = 0
-    for k in range(1, n+2):
-        for i in range(n):
+    for k in range(1, n+2):  # 운영지역을 넓혀가며 테스트, n+2까지 검토해야 모든 경우의 수
+        for i in range(n):  # 운영지역의 중간지점을 한칸씩 옮겨가며 전체 검토
             for j in range(n):
-                home = count_home(i, j)
-                if home > max_home:
+                home = count_home(i, j)  # k와 중간지점이 결정된 상태에서 수익을 검토하고 손해가 나지 않았으면 집의 수를 리턴
+                if home > max_home:  # 최대값과 비교
                     max_home = home
 
     print("#{} {}".format(test_case, max_home))
