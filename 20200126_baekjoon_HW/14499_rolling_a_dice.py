@@ -39,40 +39,37 @@ def move():
     def check_range(nx, ny):
         return 0 <= nx < n and 0 <= ny < m
 
-    global x, y
+    def update():
+        if area[x][y] == 0:
+            area[x][y] = dice[5]
+        else:
+            dice[5] = area[x][y]
+            area[x][y] = 0
+
+    global x, y, dice
     if c == 1:
         if not check_range(x, y+1):
-            return dice, False
-        new_dice = [dice[3], dice[1], dice[0], dice[5], dice[4], dice[2]]
+            return
+        dice = [dice[3], dice[1], dice[0], dice[5], dice[4], dice[2]]
         x, y = x, y+1
     elif c == 2:
         if not check_range(x, y-1):
-            return dice, False
-        new_dice = [dice[2], dice[1], dice[5], dice[0], dice[4], dice[3]]
+            return
+        dice = [dice[2], dice[1], dice[5], dice[0], dice[4], dice[3]]
         x, y = x, y-1
     elif c == 3:
         if not check_range(x-1, y):
-            return dice, False
-        new_dice = [dice[4], dice[0], dice[2], dice[3], dice[5], dice[1]]
+            return
+        dice = [dice[4], dice[0], dice[2], dice[3], dice[5], dice[1]]
         x, y = x-1, y
     else:
         if not check_range(x+1, y):
-            return dice, False
-        new_dice = [dice[1], dice[5], dice[2], dice[3], dice[0], dice[4]]
+            return
+        dice = [dice[1], dice[5], dice[2], dice[3], dice[0], dice[4]]
         x, y = x+1, y
-    return new_dice, True
-
-
-def update():
-    if area[x][y] == 0:
-        area[x][y] = dice[5]
-    else:
-        dice[5] = area[x][y]
-        area[x][y] = 0
+    update()
+    print(dice[0])
 
 
 for c in command:
-    dice, move_flag = move()
-    if move_flag:
-        update()
-        print(dice[0])
+    move()
