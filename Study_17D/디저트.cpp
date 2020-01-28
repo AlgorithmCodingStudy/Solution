@@ -1,3 +1,5 @@
+// 마름모모양만 체크하기! (4방향검사안해도됨) --> 고치기
+
 #include<iostream>
 #include<cstring>
 #include<vector>
