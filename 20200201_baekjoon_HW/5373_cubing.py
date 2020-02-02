@@ -50,8 +50,8 @@ def cubing(s, d):
     def back():
         turn(d, 3)
         for i in range(3):
-            cube[0][0][-(i+1)], cube[5][i][2], cube[1][2][-(i+1)], cube[4][i][0] \
-                = swap(d, cube[0][0][-(i+1)], cube[5][i][2], cube[1][2][-(i+1)], cube[4][i][0])
+            cube[0][0][i], cube[5][i][2], cube[1][2][-(i+1)], cube[4][-(i+1)][0] \
+                = swap(d, cube[0][0][i], cube[5][i][2], cube[1][2][-(i+1)], cube[4][-(i+1)][0])
 
     def left():
         turn(d, 4)
@@ -89,13 +89,6 @@ for _ in range(T):
             [list('ooo'), list('ooo'), list('ooo')],
             [list('ggg'), list('ggg'), list('ggg')],
             [list('bbb'), list('bbb'), list('bbb')]]
-
-    cube = [[['w1', 'w2', 'w3'], ['w4', 'w5', 'w6'], ['w7', 'w8', 'w9']],
-            [['y1', 'y2', 'y3'], ['y4', 'y5', 'y6'], ['y7', 'y8', 'y9']],
-            [['r1', 'r2', 'r3'], ['r4', 'r5', 'r6'], ['r7', 'r8', 'r9']],
-            [['o1', 'o2', 'o3'], ['o4', 'o5', 'o6'], ['o7', 'o8', 'o9']],
-            [['g1', 'g2', 'g3'], ['g4', 'g5', 'g6'], ['g7', 'g8', 'g9']],
-            [['b1', 'b2', 'b3'], ['b4', 'b5', 'b6'], ['b7', 'b8', 'b9']]]
 
     for side, direction in operations:
         direction = True if direction == '+' else False
