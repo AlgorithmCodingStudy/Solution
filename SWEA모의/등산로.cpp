@@ -1,3 +1,7 @@
+/*
+봉우리에서부터 dfs돌면서 봉우리를 1~k까지 깍음
+*/
+
 #include<iostream>
 #include<vector>
 #include<algorithm>
