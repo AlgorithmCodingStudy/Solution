@@ -34,32 +34,29 @@ def check_line():
             divide_line.append([v])
         before = v
     # [[3, 3, 3], [2], [1, 1]]
+    # [[3, 3], [2], [3, 3, 3]]
 
     before = divide_line[0]
     for i, divide in enumerate(divide_line[1:]):
-        if abs(divide[0] - before[-1]) > 1.5:
+        if 0 < divide[0] - before[-1] <= 1.5:  # 상승 [2, 2, 2] [3, 3]와 같은 상황
+            if len(before) < x:  # 이전 블럭의 길이가 경사로 길이보다 작으면 설치 불가
+                return
+            for j in range(x):  # 이전 블럭을 뒤에서 앞으로 검토
+                if divide_line[i][len(before)-x+j] % 1 != 0:  # 1로 나누어서 나머지가 있다는건 이미 경사로가 설치된 것이므로 설치 불가
+                    return
+                divide_line[i][len(before)-x+j] += 0.5  # 설치 가능하면 0.5씩 더해서 경사로를 설치했다고 표시
+            before = divide  # 이전 블럭을 현재 블럭으로 업데이트
+        elif -1.5 <= divide[0] - before[-1] < 0:  # 하강 [3, 3], [2, 2, 2]와 같은 상황
+            if len(divide) < x:  # 현재 블럭의 길이가 경사로 길이보다 작으면 설치 불가
+                return
+            for j in range(x):  # 현재 블럭을 앞에서 부터 경사로 길이 만큼
+                divide_line[i+1][j] += 0.5  # 경사로 설치
+            before = divide  # 이전 블럭을 현재 블럭으로 업데이트
+        else:  # 차이가 2이상 나면 설치 불가
             return
-        elif divide[0] - before[-1] > 0:
-            if len(before) >= x:
-                for j in range(x):
-                    if divide_line[i][len(before)-x+j] % 1 != 0:
-                        return
-                    else:
-                        divide_line[i][len(before)-x+j] += 0.5
-                before = divide
-            else:
-                return
-        elif divide[0] - before[-1] < 0:
-            if len(divide) >= x:
-                for j in range(x):
-                    divide_line[i+1][j] += 0.5
-                before = divide
-                continue
-            else:
-                return
 
     global cnt
-    cnt += 1
+    cnt += 1  # 모든 검토가 끝났으면 활주로 건설이 가능하므로 +1
     return
 
 
@@ -72,12 +69,12 @@ for test_case in range(1, T + 1):
 
     cnt = 0
 
-    for line in ground:
+    for line in ground:  # 가로 모두 검토
         check_line()
 
-    ground = [list(line) for line in zip(*ground)]
+    ground = [list(line) for line in zip(*ground)]  # transpose를 통해 세로를 가로로
 
-    for line in ground:
+    for line in ground:  # 세로 모두 검토
         check_line()
 
     print("#{} {}".format(test_case, cnt))
