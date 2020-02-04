@@ -31,9 +31,7 @@ public class 활주로건설 {
 		for(int testcase=1;testcase<=T;testcase++){
 			setData();
 			widthCheck();
-			System.out.println("가로개수"+answer);
 			heightCheck();
-			System.out.println("세로개수"+answer);
 			bw.write("#"+testcase+" "+answer+"\n");
 		}
 		bw.flush();
@@ -85,8 +83,7 @@ public class 활주로건설 {
 							height--;
 						}
 						break;
-					}
-					if(diff!= -1 || diff!= 1) {
+					default :
 						possible = false;
 						break;
 					}
@@ -141,8 +138,7 @@ public class 활주로건설 {
 							height--;
 						}
 						break;
-					}
-					if(diff!= -1 || diff!= 1) {
+					default :
 						possible = false;
 						break;
 					}
