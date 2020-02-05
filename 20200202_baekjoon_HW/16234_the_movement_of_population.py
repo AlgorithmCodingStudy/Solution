@@ -31,6 +31,7 @@ dxy = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 def dfs(sx, sy):
     stack = [(sx, sy)]
     union = [(sx, sy)]
+    union_sum = nations[sx][sy]
 
     while stack:
         x, y = stack.pop()
@@ -41,38 +42,38 @@ def dfs(sx, sy):
                 if (nx, ny) not in union and l <= abs(nations[x][y]-nations[nx][ny]) <= r:
                     union.append((nx, ny))
                     stack.append((nx, ny))
-    return union
+                    union_sum += nations[nx][ny]
+    return union, union_sum
 
 
 def union_update():
-    population = 0
-    for x, y in u:
-        population += nations[x][y]
-    population //= len(u)
-    for x, y in u:
-        nations[x][y] = population
+    population = now_sum // len(now_union)
+    for x, y in now_union:
+        nxt[x][y] = population
 
 
 move = 0
 before_unions = []
 while True:
+    nxt = [[0]*n for _ in range(n)]
     visit = []
     unions = []
+    unions_sum = []
     for i in range(n):
         for j in range(n):
             if (i, j) not in visit:
-                now_union = dfs(i, j)
+                now_union, now_sum = dfs(i, j)
                 unions.append(now_union)
                 visit.extend(now_union)
+                union_update()
+
     if len(unions) == n*n:
         break
     if before_unions == unions:
         break
 
-    for u in unions:
-        if len(u) > 1:
-            union_update()
     before_unions = unions
+    nations = nxt
     move += 1
 
 print(move)
