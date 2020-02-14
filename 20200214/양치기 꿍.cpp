@@ -2,7 +2,7 @@
 #include <queue>
 using namespace std;
 
-int vAll,kAll,R, C, visited[250][250], dx[4] = { -1,1,0,0 }, dy[4] = { 0,0,-1,1 };;
+int vAll,kAll,R, C, visited[250][250], dx[4] = { -1,1,0,0 }, dy[4] = { 0,0,-1,1 };
 char arr[250][250];
 queue<pair<int, int>> q;
 void bfs(int x, int y) {
@@ -18,7 +18,7 @@ void bfs(int x, int y) {
         for (int i = 0; i < 4; i++) {
             int nx = x + dx[i];
             int ny = y + dy[i];
-            if (nx < 0 || nx >= R || ny<0 || ny>C)continue;
+            if (nx < 0 || nx >= R || ny<0 || ny>=C)continue;
             if (visited[nx][ny] == 1 || arr[nx][ny] == '#')continue;
             if (arr[nx][ny] == 'v') v++;
             if (arr[nx][ny] == 'k')k++;
