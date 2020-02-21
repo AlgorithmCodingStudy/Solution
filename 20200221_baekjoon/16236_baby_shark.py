@@ -46,6 +46,7 @@ for a in range(n):
     for b, v in enumerate(area[a]):
         if v == 9:
             baby_shark = [2, a, b, 0]
+            area[a][b] = 0
 
 
 dxy = [(1, 0), (-1, 0), (0, 1), (0, -1)]
@@ -56,10 +57,10 @@ def find_fish():
     visit = {(sx, sy): True}
     q = deque([(sx, sy)])
 
+    fishes_tmp = []
     d = 1
     while q:
         qsize = len(q)
-        fishes_tmp = []
         for _ in range(qsize):
             x, y = q.popleft()
 
@@ -67,20 +68,21 @@ def find_fish():
                 nx, ny = x+dx, y+dy
                 if not (0 <= nx < n and 0 <= ny < n):
                     continue
+                if (nx, ny) in visit:
+                    continue
                 fish_age = area[nx][ny]
-                if 0 < fish_age < age and (nx, ny) not in fishes_tmp:
-                    fishes_tmp.append((nx, ny))
-                elif (fish_age == 0 or fish_age == age) and (nx, ny) not in visit:
+                if fish_age <= age:
                     q.append((nx, ny))
                     visit[(nx, ny)] = True
-
-        if fishes_tmp:
-            fishes_tmp = sorted(fishes_tmp)
-            x, y = fishes_tmp[0]
-            result = (area[x][y], x, y)
-            return d, result
-
+                    if 0 < fish_age < age and (d, nx, ny) not in fishes_tmp:
+                        fishes_tmp.append((d, nx, ny))
         d += 1
+
+    if fishes_tmp:
+        fishes_tmp = sorted(fishes_tmp)
+        d, x, y = fishes_tmp[0]
+        result = (area[x][y], x, y)
+        return d, result
 
     return 0, 0
 
