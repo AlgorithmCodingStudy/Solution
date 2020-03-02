@@ -9,54 +9,46 @@ import sys
 read = sys.stdin.readline
 
 r, c, k = map(int, read().strip().split())
-a = [list(map(int, read().strip().split())) for _ in range(3)]
+a = [[0]*100 for _ in range(100)]
+for o in range(3):
+    a[o][0], a[o][1], a[o][2] = map(int, read().strip().split())
 
 
-def opr():
-    nxt, length = [], 0
-    for line in a:
+def opr(row, col):
+    length = 0
+    for i in range(row):
         cnt = {}
-        for v in line:
+        for j in range(col):
+            v = a[i][j]
+            if v == 0: continue
             if v in cnt:
                 cnt[v] += 1
             else:
                 cnt[v] = 1
-        if 0 in cnt:
-            cnt.pop(0)
-        cnt = list(chain(*sorted(cnt.items(), key=lambda key: (key[1], key[0]))))
-        nxt.append(cnt)
+        cnt = list(chain(*sorted(cnt.items(), key=lambda key: (key[1], key[0]))))[:100]
+        for j, v in enumerate(cnt):
+            a[i][j] = v
+        for j in range(len(cnt), col):
+            a[i][j] = 0
         length = max(len(cnt), length)
 
-    length = 100 if length > 100 else length
-    for idx, line in enumerate(nxt):
-        if len(line) < length:
-            line += [0]*(length-len(line))
-        else:
-            nxt[idx] = line[:100]
+    return length
 
-    return nxt
-
-
-if a[r-1][c-1] == k:
-    print(0)
-    sys.exit(0)
 
 time = 0
-while True:
-    if len(a) >= len(a[0]):
-        a = opr()
+max_row, max_col = 3, 3
+while a[r-1][c-1] != k:
+    if max_row >= max_col:
+        max_col = opr(max_row, max_col)
     else:
         a = list(map(list, zip(*a)))
-        a = opr()
+        max_row = opr(max_col, max_row)
         a = list(map(list, zip(*a)))
 
     time += 1
-    try:
-        if a[r-1][c-1] == k:
-            print(time)
-            sys.exit(0)
-        if a[r-1][c-1] > 100:
-            print(-1)
-            sys.exit(0)
-    except:
-        pass
+
+    if time > 100:
+        print(-1)
+        sys.exit(0)
+
+print(time)
