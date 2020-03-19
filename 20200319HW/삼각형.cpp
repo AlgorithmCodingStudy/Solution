@@ -35,6 +35,7 @@ int main()
 	for (int i = 1; i <= n; i++)
 	{
 		ans = max(ans, memo[n][i]);  //이부분 *max_element(memo[n],memo[n]+n)이용하니까 100%에서 틀림
+		                             //*max_element사용하려면 memo[n]+(n+1)로!!
 	}
 
 	cout << ans << endl;
