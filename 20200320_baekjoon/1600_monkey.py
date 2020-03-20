@@ -17,14 +17,13 @@
 3. 현재 k가 k라면 상하좌우만 이동
 4. k보다 작으면 말처럼 이동도 포함
 """
-from collections import deque
 import sys
 read = sys.stdin.readline
 
 k = int(read())
 w, h = map(int, read().split())
 area = [list(map(int, read().split())) for _ in range(h)]
-check = [[[-1]*(k+1) for _ in range(w)] for _ in range(h)]
+check = [[[False]*(k+1) for _ in range(w)] for _ in range(h)]
 dxy = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 dxy_h = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)]
 
@@ -33,14 +32,13 @@ def bfs():
     def check_range(_x, _y):
         return 0 <= _x < h and 0 <= _y < w
 
-    q = deque([(0, 0, 0)])
-    check[0][0][0] = 0
+    q = [(0, 0, 0)]
+    check[0][0][0] = True
     cnt = 0
 
     while q:
-        qsize = len(q)
-        for _ in range(qsize):
-            x, y, now_k = q.popleft()
+        new_q = []
+        for x, y, now_k in q:
             if (x, y) == (h-1, w-1):
                 return cnt
 
@@ -49,16 +47,18 @@ def bfs():
                     nx, ny = x+dx, y+dy
                     if (not check_range(nx, ny)) or area[nx][ny] == 1:
                         continue
-                    if check[nx][ny][now_k+1] == -1:
-                        q.append((nx, ny, now_k+1))
-                        check[nx][ny][now_k+1] = cnt
+                    if not check[nx][ny][now_k+1]:
+                        new_q.append((nx, ny, now_k+1))
+                        check[nx][ny][now_k+1] = True
+
             for dx, dy in dxy:
                 nx, ny = x+dx, y+dy
                 if (not check_range(nx, ny)) or area[nx][ny] == 1:
                     continue
-                if check[nx][ny][now_k] == -1:
-                    q.append((nx, ny, now_k))
-                    check[nx][ny][now_k] = cnt
+                if not check[nx][ny][now_k]:
+                    new_q.append((nx, ny, now_k))
+                    check[nx][ny][now_k] = True
+        q = new_q
         cnt += 1
     return -1
 
