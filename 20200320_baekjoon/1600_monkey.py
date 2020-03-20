@@ -63,31 +63,3 @@ def bfs():
     return -1
 
 print(bfs())
-
-# def dfs():
-#     def check_range(_x, _y):
-#         return 0 <= _x < h and 0 <= _y < w
-#
-#     q = [(0, 0, 0)]
-#     check[0][0] = 0
-#
-#     while q:
-#         x, y, now_k = q.pop()
-#
-#         if now_k < k:
-#             for dx, dy in dxy_h:
-#                 nx, ny = x+dx, y+dy
-#                 if not check_range(nx, ny) or area[nx][ny] == 1:
-#                     continue
-#                 if now_k+1 < check[nx][ny]:
-#                     q.append((nx, ny, now_k+1))
-#                     check[nx][ny] = now_k+1
-#         for dx, dy in dxy:
-#             nx, ny = x+dx, y+dy
-#             if not check_range(nx, ny) or area[nx][ny] == 1:
-#                 continue
-#             if now_k < check[nx][ny]:
-#                 q.append((nx, ny, now_k))
-#                 check[nx][ny] = now_k
-
-
