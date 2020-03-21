@@ -43,7 +43,7 @@ def bfs():
             if now_k < k:
                 for dx, dy in dxy_h:
                     nx, ny = x+dx, y+dy
-                    if (not check_range(nx, ny)) or area[nx][ny] == 1:
+                    if not check_range(nx, ny) or area[nx][ny] == 1:
                         continue
                     if not check[nx][ny][now_k+1]:
                         new_q.append((nx, ny, now_k+1))
@@ -51,7 +51,7 @@ def bfs():
 
             for dx, dy in dxy:
                 nx, ny = x+dx, y+dy
-                if (not check_range(nx, ny)) or area[nx][ny] == 1:
+                if not check_range(nx, ny) or area[nx][ny] == 1:
                     continue
                 if not check[nx][ny][now_k]:
                     new_q.append((nx, ny, now_k))
