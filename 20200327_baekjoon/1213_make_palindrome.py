@@ -32,7 +32,7 @@ for ch in name:
         cnt[ch] += 1
 
 keys = list(sorted(cnt.keys()))
-result, center = [], 0
+result, center = [], ''
 for key in keys:
     if cnt[key] % 2:
         if len(name) % 2:
@@ -47,8 +47,5 @@ for key in keys:
             sys.exit(0)
     result.extend([key]*(cnt[key]//2))
 
-if len(name) % 2:
-    result = result + [center] + result[::-1]
-else:
-    result = result + result[::-1]
+result = result + [center] + result[::-1]
 print("".join(result))
