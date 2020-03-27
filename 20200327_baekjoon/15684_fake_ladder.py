@@ -66,10 +66,12 @@ def check_ladder():
 if check_ladder():
     print(0)
     sys.exit(0)
+
 success = False
 for cnt in range(3):
-    cases = list(sorted(combinations(empty, cnt+1)))
+    cases = combinations(empty, cnt+1)
     for case in cases:
+
         if not check_available_case(case):
             continue
         set_ladder(case)
@@ -79,6 +81,7 @@ for cnt in range(3):
             break
 
         remove_ladder(case)
+
     if success:
         break
 
