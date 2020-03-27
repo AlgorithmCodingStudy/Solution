@@ -31,9 +31,8 @@ for ch in name:
     else:
         cnt[ch] += 1
 
-keys = list(sorted(cnt.keys()))
 result, center = [], ''
-for key in keys:
+for key in sorted(cnt.keys()):
     if cnt[key] % 2:
         if len(name) % 2:
             if not center:
