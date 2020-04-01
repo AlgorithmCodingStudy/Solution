@@ -2,10 +2,9 @@
 #include<vector>
 #include<algorithm>
 
-#define ll long long
 using namespace std;
 
-struct Edge {ll from, to, weight;
+struct Edge { int from, to, weight;
 bool operator<(const Edge& A) const
 {
 	return weight < A.weight;
@@ -13,11 +12,10 @@ bool operator<(const Edge& A) const
 };
 
 vector<Edge>E;
-vector<ll>R;
 
-ll N, M;
-ll Parent[100010];
-ll Height[100010];
+int N, M;
+int Parent[100010];
+int Height[100010];
 
 int findParent(int a);
 void merge(int a, int b);
@@ -28,12 +26,12 @@ int main()
 	cin.tie(0);
 	cout.tie(0);
 
-	ll result = 0;
+	int result = 0;
 
 	cin >> N >> M;
-	for (int i = 0; i <M; i++)
+	for (int i = 0; i < M; i++)
 	{
-		ll a, b, c;
+		int a, b, c;
 		cin >> a >> b >> c;
 		E.push_back({ a,b,c });
 	}
@@ -45,7 +43,8 @@ int main()
 		Parent[i] = i;
 	}
 	
-	
+	vector<int>R;
+
 	for (int i = 0; i < E.size(); i++)
 	{
 		if (findParent(E[i].from) == findParent(E[i].to)) continue;
@@ -54,8 +53,7 @@ int main()
 		merge(E[i].from, E[i].to);
 	}
 
-
-	cout << result-R[R.size()-1]<< endl;
+	cout << result-R[R.size()-1] << endl;
 
 	return 0;
 }
@@ -64,8 +62,9 @@ int main()
 int findParent(int a)
 {
 	
-	if (Parent[a] == a) return a;
+	if (Parent[a] == a)return a;
 	return Parent[a] = findParent(Parent[a]);
+
 }
 
 void merge(int a, int b)
@@ -75,7 +74,10 @@ void merge(int a, int b)
 	int rootb = findParent(b);
 
 	if (roota == rootb) return;
-	
+
+	if (Height[roota] > Height[rootb]) swap(roota, rootb);
+	else if (Height[roota] == Height[rootb])Height[rootb]++;
+
 	Parent[roota] = rootb;
 }
 
