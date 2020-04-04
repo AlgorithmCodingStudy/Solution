@@ -23,23 +23,22 @@ for _ in range(e):
     graph[u].append((v, w))
 
 hq = []
-heapq.heappush(hq, (0, k, None))
+heapq.heappush(hq, (0, k))
 for i in range(V):
     if i+1 == k: continue
-    heapq.heappush(hq, (sys.maxsize, i+1, None))
+    heapq.heappush(hq, (sys.maxsize, i+1))
 
 d = [sys.maxsize]*(V+1)
 d[k] = 0
 while hq:
-    now_d, i, p = heapq.heappop(hq)
+    now_d, i = heapq.heappop(hq)
     if d[i] < now_d: continue
 
     for v, w in graph[i]:
         if now_d + w < d[v]:
             d[v] = now_d + w
-            heapq.heappush(hq, (d[v], v, i))
+            heapq.heappush(hq, (d[v], v))
 
 for distance in d[1:]:
     if distance == sys.maxsize: distance = 'INF'
     print(distance)
-
