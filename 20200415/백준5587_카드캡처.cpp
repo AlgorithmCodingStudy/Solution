@@ -41,6 +41,7 @@ int main()
 	{
 	
 		pick_sang();
+        if(play_stop())break;
 		pick_geun();
 	}
 
