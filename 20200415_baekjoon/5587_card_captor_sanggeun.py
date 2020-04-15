@@ -42,5 +42,5 @@ while cards[0] and cards[1]:
 
     turn = not turn
 
-print(sum(cards[1]))
-print(sum(cards[0]))
+print(len(cards[1]))
+print(len(cards[0]))
