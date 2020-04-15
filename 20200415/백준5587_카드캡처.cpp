@@ -41,7 +41,7 @@ int main()
 	{
 	
 		pick_sang();
-        if(play_stop())break;
+        if(play_stop())break; //이거때매 틀렸었음!(상근이 고르고 끝날수도있어서)
 		pick_geun();
 	}
 
