@@ -16,7 +16,7 @@ import sys
 read = sys.stdin.readline
 
 n = 10000000
-a = [False,False] + [True]*(n-1)
+a = [False, False] + [True]*(n-1)
 primes = []
 
 for i in range(2, n+1):
