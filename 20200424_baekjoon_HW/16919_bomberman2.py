@@ -8,6 +8,14 @@
 
 알고리즘: 시뮬레이션
 
+6 7 2
+.......
+...O...
+....O..
+.......
+OO.....
+OO.....
+
 
 """
 
@@ -16,14 +24,14 @@ read = sys.stdin.readline
 
 r, c, n = map(int, read().split())
 state = [list(read().strip()) for _ in range(r)]
-if not n%2:
+if n % 2 == 0:
     for _ in range(r):
         print('O'*c)
+elif n == 1:
+    for line in state:
+        print("".join(line))
 else:
-    if n%4 == 1:
-        for line in state:
-            print("".join(line))
-    else:
+    for _ in range((n//2)%2+2):
         remove = set()
         for i in range(r):
             for j in range(c):
@@ -37,7 +45,7 @@ else:
         result = [['O']*c for _ in range(r)]
         for i, j in remove:
             result[i][j] = '.'
+        state = result
 
-        for line in result:
-            print("".join(line))
-
+    for line in state:
+        print("".join(line))
