@@ -22,7 +22,7 @@ def solution(s):
     for v in s:
         add = set(v) - set(answer)
         answer.extend(list(add))
-    return list(answer)
+    return answer
 
 
 print(solution("{{2},{2,1},{2,1,3},{2,1,3,4}}"))
