@@ -170,5 +170,3 @@ fabric.properties
 
 # Remove sql lite db
 *.sqlite3
-
-20200509_kakao_cote
