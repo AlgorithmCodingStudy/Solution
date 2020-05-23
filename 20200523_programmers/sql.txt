@@ -1,0 +1,17 @@
+create table GAME_USERS(ID varchar(100));
+insert into GAME_USERS(ID) values("user1");
+insert into GAME_USERS(ID) values("user2");
+insert into GAME_USERS(ID) values("user3");
+
+create table CHARACTERS(NAME varchar(100), PRICE integer);
+insert into CHARACTERS(NAME, PRICE) values("Albatross", 1000);
+insert into CHARACTERS(NAME, PRICE) values("Bee", 3000);
+
+create table PURCHASES(USER_ID varchar(100), ITEM varchar(100));
+insert into PURCHASES(USER_ID, ITEM) values("user1", "Albatross");
+insert into PURCHASES(USER_ID, ITEM) values("user2", "Albatross");
+insert into PURCHASES(USER_ID, ITEM) values("user1", "Bee");
+
+select g.ID, count(USER_ID), sum(ifnull(PRICE, 0)) from GAME_USERS as g left outer join PURCHASES as p on g.ID = p.USER_ID left outer join CHARACTERS as c on p.ITEM = c.NAME group by g.ID;
+-- Your code here!
+
