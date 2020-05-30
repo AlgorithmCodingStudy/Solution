@@ -2,16 +2,15 @@
 위장
 """
 
+from functools import reduce
+from operator import mul
+
 
 def solution(clothes):
-    clothes_dict = {}
+    clothes_dict = {"_": 1}
     for c, c_class in clothes:
         if c_class in clothes_dict:
             clothes_dict[c_class] += 1
         else:
-            clothes_dict[c_class] = 1
-    answer = 1
-    for key in clothes_dict:
-        answer *= clothes_dict[key]+1
-    return answer-1
-
+            clothes_dict[c_class] = 2
+    return reduce(mul, clothes_dict.values())-1
