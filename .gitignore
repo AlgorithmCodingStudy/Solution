@@ -171,5 +171,8 @@ fabric.properties
 # Remove sql lite db
 *.sqlite3
 
+20200314_soma_cote
+20200426_soma_cote
+20200509_kakao_cote
+20200516_kakao_cote
 20200528_ea_cote
-
